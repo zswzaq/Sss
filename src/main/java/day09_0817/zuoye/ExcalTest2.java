@@ -53,7 +53,7 @@ public class ExcalTest2 {
         /** -----获得除了第一行的数据（属性/变量的值）--开始----------------------------- */
         // 获的最大的行数
         int lastRowNum = sheetAt.getLastRowNum();
-        // 循环遍历获得索引的列（0到最大列）
+        // 循环遍历获得索引的列（0到最大列数）
         for (int i = 1; i <= lastRowNum; i++) {
             Person person = new Person();
             // 获得当前行
