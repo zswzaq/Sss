@@ -65,7 +65,6 @@ public class ExcalTest2 {
                 cellCurrent.setCellType(CellType.STRING);
                 // 当前列的值
                 String stringCellValue = cellCurrent.getStringCellValue();
-                // System.out.print(stringCellValue + " ");
                 /*
                  * if (j==0) { person.setId(stringCellValue); }else if (j==1) {
                  * person.setName(stringCellValue); }else if (j==2) {
