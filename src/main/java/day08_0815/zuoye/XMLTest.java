@@ -1,24 +1,24 @@
-package day08_0815.test;
+package day08_0815.zuoye;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 public class XMLTest {
 
-    public static void main(String[] args) throws DocumentException {
-        List<User> users = readXml("/user.xml");
+    public static void main(String[] args) throws Exception {
+        List<User> users = readXml("/User.xml");
         for (User user : users) {
             System.out.println(user);
         }
     }
 
-    private static List<User> readXml(String url) throws DocumentException {
+    private static List<User> readXml(String url) throws Exception {
         // 创建一个List对象
         List<User> users = new ArrayList<User>();
         // 创建SaxReader对象
@@ -46,16 +46,15 @@ public class XMLTest {
                 // 获取标签中的key和value值
                 String key = userInfoElement.getName();
                 String value = userInfoElement.getStringValue();
-                // 如果key是name 就user.setName
-                // 如果key是age 就user.setAge
-                // 如果key是sex 就user.setSex
-                if ("name".equals(key)) {
-                    user.setName(value);
-                } else if ("age".equals(key)) {
-                    user.setAge(value);
-                } else if ("sex".equals(key)) {
-                    user.setSex(value);
-                }
+                // 如果key是name 就user.setName，如果key是age 就user.setAge， 如果key是sex 就user.setSex
+                /*
+                 * if ("name".equals(key)) { user.setName(value); } else if ("age".equals(key))
+                 * { user.setAge(value); } else if ("sex".equals(key)) { user.setSex(value); }
+                 */
+                Class uClass = user.getClass();
+                String setMethod = "set" + (key.charAt(0) + "").toUpperCase() + key.substring(1);
+                Method method = uClass.getMethod(setMethod, String.class);
+                method.invoke(user, value);
             }
             // 把user对象添加到List中
             users.add(user);

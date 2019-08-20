@@ -1,4 +1,4 @@
-package day08_0815.test;
+package day08_0815.zuoye;
 
 public class User {
 
@@ -6,10 +6,19 @@ public class User {
     private String name;
     private String age;
     private String sex;
+    private String c;
+
+    public String getC() {
+        return c;
+    }
+
+    public void setC(String c) {
+        this.c = c;
+    }
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", name=" + name + ", age=" + age + ", sex=" + sex + "]";
+        return "User [id=" + id + ", name=" + name + ", age=" + age + ", sex=" + sex + ", c=" + c + "]";
     }
 
     public User() {

@@ -59,8 +59,6 @@ public class ReadXmlTest {
                     // 获取标签中的key和value值
                     String key = attributes.getName();
                     String value = attributes.getStringValue();
-                    // 如果key是by, 就locator.setBy,如果key是value,
-                    // 就locator.setValue,,如果key是desc, 就locator.setDesc
                     /*
                      * if ("by".equals(key)) { locator.setBy(value); } else if
                      * ("value".equals(key)) { locator.setValue(value); } else
@@ -70,15 +68,18 @@ public class ReadXmlTest {
                     Class<Locator> class1 = Locator.class;
                     // 2.设置setXxx方法
                     String setMethod = "set" + (key.charAt(0) + "").toUpperCase() + key.substring(1);
-                    // 3.获得setXxx方法
+                    // 3.获得Locator类中的setXxx方法
                     Method method = class1.getMethod(setMethod, String.class);
                     // 4.调用此方法
                     method.invoke(locator, value);
                 }
+                // 往里边map放值
                 locatorMap.put(stringValue, locator);
             }
+            // 往外部map放值
             map.put(nameString, locatorMap);
         }
+        // 返回外层map
         return map;
     }
 }
