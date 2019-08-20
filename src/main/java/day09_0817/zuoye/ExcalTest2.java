@@ -18,15 +18,15 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 public class ExcalTest2 {
     public static void main(String[] args) throws Exception {
-        List<Person> readExcal = readExcal("/Person.xlsx",0);
+        List<Person> readExcal = readExcal("/Person.xlsx", 0);
         for (Person person : readExcal) {
             System.out.println(person);
         }
     }
 
-    private static List<Person> readExcal(String url,int sheetNum) throws IOException, InvalidFormatException, NoSuchMethodException,
-            IllegalAccessException, InvocationTargetException {
-        // 创建一个List 接收person
+    private static List<Person> readExcal(String url, int sheetNum) throws IOException, InvalidFormatException,
+            NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        // 创建List 接收person
         List<Person> pList = new ArrayList<Person>();
         // 2.通过流创建：：类.class.getResourceAsStream()
         InputStream file = ExcalTest2.class.getResourceAsStream(url);
