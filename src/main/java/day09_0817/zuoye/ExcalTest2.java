@@ -74,7 +74,7 @@ public class ExcalTest2 {
                  */
                 // 获得当前列的属性名字
                 String bialiangs_values = bialiangs[j];
-                // (反射)
+                // (反射机制：设置属性的值)
                 // 设setXxx方法
                 String method = "set" + (bialiangs_values.charAt(0) + "").toUpperCase() + bialiangs_values.substring(1);
                 // 获得类字节码对象
