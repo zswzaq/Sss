@@ -5,7 +5,7 @@
     <classes>
       <class name="com.zs.day11.NewTest">
         <methods>
-          <include name="f"/>
+          <include name="fun3"/>
         </methods>
       </class> <!-- com.zs.day11.NewTest -->
     </classes>

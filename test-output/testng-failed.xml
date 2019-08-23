@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
-  <test thread-count="5" name="Default test(failed)">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Suite]">
+  <test thread-count="5" name="Test_F(failed)">
     <classes>
-      <class name="com.zs.day11.NewTest">
+      <class name="com.zs.day11.pack4.Failure_Test">
         <methods>
-          <include name="f"/>
+          <include name="beforeMethod"/>
+          <include name="fun2"/>
+          <include name="beforeTest"/>
+          <include name="afterMethod"/>
+          <include name="afterSuite"/>
+          <include name="fun3"/>
+          <include name="beforeSuite"/>
+          <include name="afterTest"/>
         </methods>
-      </class> <!-- com.zs.day11.NewTest -->
+      </class> <!-- com.zs.day11.pack4.Failure_Test -->
     </classes>
-  </test> <!-- Default test(failed) -->
-</suite> <!-- Failed suite [Default suite] -->
+  </test> <!-- Test_F(failed) -->
+</suite> <!-- Failed suite [Suite] -->

@@ -2,12 +2,10 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="Suite" parallel="false">
-  
-  <test name="Test">
-  
-  
-    <classes>
-      <class name="com.zs.day11.NewTest"/>
-    </classes>
-  </test> <!-- Test -->
-</suite> <!-- Suite -->
+	<test name="Test">
+		<classes>
+			<class name="com.zs.day11.pack2.Failure_Test" />
+			<class name="com.zs.day11.pack2.Success_Test" />
+		</classes>
+	</test>
+</suite>
