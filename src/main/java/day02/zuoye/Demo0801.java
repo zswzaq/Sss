@@ -3,7 +3,6 @@ package day02.zuoye;
 import java.util.Arrays;
 
 public class Demo0801 {
-
     public static void main(String[] args) {
         // int a = 1.1; // 错，1.1默认是double类型
         // int f = 2; // 对
