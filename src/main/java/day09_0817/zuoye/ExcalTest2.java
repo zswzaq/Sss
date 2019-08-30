@@ -24,8 +24,7 @@ public class ExcalTest2 {
         }
     }
 
-    private static List<Person> readExcal(String url,int sheetNum) throws IOException, InvalidFormatException, NoSuchMethodException,
-            IllegalAccessException, InvocationTargetException {
+    private static List<Person> readExcal(String url,int sheetNum) throws Exception {
         // 创建一个List 接收person
         List<Person> pList = new ArrayList<Person>();
         // 2.通过流创建：：类.class.getResourceAsStream()
