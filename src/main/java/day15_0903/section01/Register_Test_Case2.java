@@ -35,7 +35,7 @@ public class Register_Test_Case2 {
 
 	@DataProvider
 	public Object[][] getData() {
-		ArrayList<Object> dataList = ExcelUtils.readExcel("/case/test_case_02.xlsx", 0, ApiCase.class);
+		ArrayList<Object> dataList = ExcelUtils.readExcel("/case/test_case2.xlsx", 0, ApiCase.class);
 		Object[][] datas = new Object[dataList.size()][];
 		for (int i = 0; i < dataList.size(); i++) {
 			Object[] itemArray = { dataList.get(i) };
@@ -51,5 +51,9 @@ public class Register_Test_Case2 {
 		String result = HttpUtils.post(url, requestData);
 		System.out.println(result);
 	}
+	public static void main(String[] args) {
+	    ArrayList<Object> dataList = ExcelUtils.readExcel("/case/test_case2.xlsx", 0, ApiCase.class);
+	    System.out.println(dataList);
+    }
 
 }
