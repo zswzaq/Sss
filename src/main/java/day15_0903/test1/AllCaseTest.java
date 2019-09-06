@@ -13,8 +13,8 @@ public class AllCaseTest {
         // 接口的基本信息
         List<Object> apiInfoList = ExcalTools.readExcal("/case/test_case_03.xlsx", 1, ApiInfo.class);
         // 每条测试用例都对应一条基本信息,
-        // 接口的基本信息是测试用例的一个属性
-        // 创建一个二维数组，做数据提供者
+        // 1.接口的基本信息是测试用例的一个属性
+        // 2.创建一个二维数组，做数据提供者
         Object[][] datas = new Object[apiCaseDetailList.size()][];
         for (int i = 0; i < apiCaseDetailList.size(); i++) {
             // 获取当前索引的api详情信息对象
