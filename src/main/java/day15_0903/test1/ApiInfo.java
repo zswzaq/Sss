@@ -2,6 +2,7 @@ package day15_0903.test1;
 
 /**
  * api的基本信息
+ * 
  * @author Administrator
  */
 public class ApiInfo {
@@ -9,6 +10,8 @@ public class ApiInfo {
     private String apiName;
     private String url;
     private String type;
+    // headers
+    private String headers;
 
     public String getApiId() {
         return apiId;
@@ -42,9 +45,18 @@ public class ApiInfo {
         this.type = type;
     }
 
+    public String getHeaders() {
+        return headers;
+    }
+
+    public void setHeaders(String headers) {
+        this.headers = headers;
+    }
+
     @Override
     public String toString() {
-        return "ApiInfo [apiId=" + apiId + ", apiName=" + apiName + ", url=" + url + ", type=" + type + "]";
+        return "ApiInfo [apiId=" + apiId + ", apiName=" + apiName + ", url=" + url + ", type=" + type + ", headers="
+                + headers + "]";
     }
 
 }

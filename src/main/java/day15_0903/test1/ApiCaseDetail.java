@@ -47,8 +47,7 @@ public class ApiCaseDetail {
     @Override
     public String toString() {
         return "ApiCaseDetail [caseId=" + caseId + ", apiId=" + apiId + ", requestData=" + requestData + ", apiInfo="
-                + apiInfo + ", getCaseId()=" + getCaseId() + ", getApiId()=" + getApiId() + ", getRequestData()="
-                + getRequestData() + ", getApiInfo()=" + getApiInfo() + "]";
+                + apiInfo + "]";
     }
 
 }
