@@ -6,6 +6,7 @@ package day16_0905.test;
 public class ApiTools {
     // 为数据提供者
     public static Object[][] getData() {
+        return null;
 
     }
 }
