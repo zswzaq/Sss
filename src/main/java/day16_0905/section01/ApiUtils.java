@@ -28,7 +28,7 @@ public class ApiUtils {
 		ArrayList<Object> apiInfoList = ExcelUtils.readExcel("/case16/test_case_02.xlsx", 1, ApiInfo.class);
 		// 每条测试用例都对应有一个接口基本信息：接口基本信息是测试用例对象的一个属性
 		// 把List的中间数据重新组装到map中去
-		Map<String, ApiInfo> apiInfoMap = new HashMap<>();
+		Map<String, ApiInfo> apiInfoMap = new HashMap<String, ApiInfo>();
 		for (Object obj : apiInfoList) {
 			ApiInfo apiInfo = (ApiInfo) obj;
 			apiInfoMap.put(apiInfo.getApiId(), apiInfo);

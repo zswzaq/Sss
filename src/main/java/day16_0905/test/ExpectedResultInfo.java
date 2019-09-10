@@ -19,7 +19,7 @@ public class ExpectedResultInfo {
     public Object getExpected() {
         return expected;
     }
-    public void setExpected(String expected) {
+    public void setExpected(Object expected) {
         this.expected = expected;
     }
     @Override

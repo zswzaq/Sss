@@ -8,6 +8,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 
+import day16_0905.section01.ExpectedRespKeyInfo;
+
 /**
  * 断言工具类
  * 
@@ -27,21 +29,26 @@ public class AssertTools {
         if (resultInfos == null) {
             return;
         } else {
-            // 把实际响应结果解析成jsonpath对应的对象
+          //把实际响应结果解析成jsonpath对应的对象
             Object document = Configuration.defaultConfiguration().jsonProvider().parse(actualResult);
-            for (ExpectedResultInfo expectedResult : resultInfos) {
-                // 2.拿实际结果
-                String actual = expectedResult.getActual();
-                // 3.拿预期结果
-                Object expected = expectedResult.getExpected();
-                // 利用jsonPath找到对应实际的值
-                Object actualData = JsonPath.read(document, actual);
-                System.out.println(actualData + "<——>" + expected);
-                // testNg断言
+            //遍历每个要断言的信息
+            for (ExpectedResultInfo expectedRespKeyInfo : resultInfos) {
+                //提取数据的实际值
+                String jsonPath = expectedRespKeyInfo.getActual();
+                //提取数据的期望值
+                Object expected = expectedRespKeyInfo.getExpected();
+                //通过jsonpath技术提取对应的实际结果
+                Object actualData = JsonPath.read(document, jsonPath);
+                //断言
                 Assert.assertEquals(actualData, expected);
             }
         }
 
     }
 
+    
+    
+    
+    
+    
 }

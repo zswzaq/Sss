@@ -34,7 +34,7 @@ public class AssertUtils {
 		Object document = Configuration.defaultConfiguration().jsonProvider().parse(actualResult);
 		//遍历每个要断言的信息
 		for (ExpectedRespKeyInfo expectedRespKeyInfo : respKeyInfoList) {
-			//提取数据的期望值
+			//提取数据的实际值
 			String jsonPath = expectedRespKeyInfo.getJsonPath();
 			//提取数据的期望值
 			Object expected = expectedRespKeyInfo.getExpected();
