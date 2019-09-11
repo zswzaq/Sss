@@ -1,5 +1,6 @@
-package day16_0905.test;
+package day17_0910.test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,12 +9,25 @@ import java.util.Map;
  * @author Administrator
  */
 public class ApiTools {
-    //提供数据
+    // 创建一个数据池,保存需要回写的数据
+    private static List<WriteDate> writeDatesList = new ArrayList<WriteDate>();
+
+    // 获取整个数据池容器的所有数据
+    public static List<WriteDate> getWriteDatesList() {
+        return writeDatesList;
+    }
+
+    // 把一条一条要写的数据放在数据池中
+    public static void setWriteDatesList(WriteDate writeDate) {
+        writeDatesList.add(writeDate);
+    }
+
+    // 数据提供者
     public static Object[][] getData() {
         // 获取用例的详细信息
-        List<Object> apiCaseDetailList = ExcalTools.readExcal("/case/test_case_5.xlsx", 0, ApiCaseDetail.class);
+        List<Object> apiCaseDetailList = ExcalTools.readExcal("/case/test_case_all.xlsx", 0, ApiCaseDetail.class);
         // 接口的基本信息
-        List<Object> apiInfoList = ExcalTools.readExcal("/case/test_case_5.xlsx", 1, ApiInfo.class);
+        List<Object> apiInfoList = ExcalTools.readExcal("/case/test_case_all.xlsx", 1, ApiInfo.class);
         // 每条测试用例都对应一条基本信息,
         // 接口的基本信息是测试用例的一个属性
         // 把List的中间数据重新组装到map中去
