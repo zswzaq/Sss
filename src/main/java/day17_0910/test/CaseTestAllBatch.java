@@ -28,6 +28,6 @@ public class CaseTestAllBatch {
     // 执行完所有的测试用例后，在全部写一次
     @AfterSuite
     public void afterSuite() {
-        ExcalTools.writeBackBatch("/case/test_case_all.xlsx", "D:\\myGit\\a.xlsx", 0);
+        ExcalTools.writeBackBatch("/case/test_case_all.xlsx", "D:\\a.xlsx", 0);
     }
 }
