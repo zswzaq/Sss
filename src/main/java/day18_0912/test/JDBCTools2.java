@@ -1,5 +1,6 @@
 package day18_0912.test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -13,10 +14,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
-public class JDBCTools {
+public class JDBCTools2 {
     private static String url;
     private static String user;
     private static String password;
+    private static Properties properties = null;
+    static Connection conn = null;
+    static Statement stmt = null;
+    static ResultSet resultSet = null;
 
     /**
      * static块只会在当前类加载到jvm时运行一遍
@@ -26,47 +31,47 @@ public class JDBCTools {
     }
 
     /**
+     * 初始化方法：从属性文件加载出数据库连接信息、把驱动加载到jvm
+     */
+    private static void init() {
+        try {
+            // 1:从属性文件加载出数据库连接信息
+            properties = new Properties();
+            InputStream inStream = JDBCTools2.class.getResourceAsStream("/jdbc.properties");
+            if (inStream == null) {
+                throw new FileNotFoundException("properties配置文件未找到");
+            }
+            properties.load(inStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * 获得连接
      * 
      * @return
      * @throws SQLException
      */
     private static Connection getConnection() {
+        // 2:装载Driver，安装驱动管理器DriverManager
+        String driverName = properties.getProperty("jdbc.driver");
+        url = properties.getProperty("jdbc.url");
+        user = properties.getProperty("jdbc.user");
+        password = properties.getProperty("jdbc.password");
         try {
-            return DriverManager.getConnection(url, user, password);
+            Class.forName(driverName);
+            conn = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * 初始化方法：从属性文件加载出数据库连接信息、把驱动加载到jvm
-     */
-    private static void init() {
-        try {
-            // 1:从属性文件加载出数据库连接信息
-            Properties properties = new Properties();
-            InputStream inStream = JDBCTools.class.getResourceAsStream("/jdbc.properties");
-            properties.load(inStream);
-            url = properties.getProperty("jdbc.url");
-            user = properties.getProperty("jdbc.user");
-            password = properties.getProperty("jdbc.password");
-
-            // 2:装载MySQL驱动程序Driver，安装驱动管理器DriverManager
-            String driverName = properties.getProperty("jdbc.driver");
-            Class.forName(driverName);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+        return conn;
     }
 
     // 增删改
     private static void excute(String sql) {
-        Connection conn = null;
-        Statement stmt = null;
         try {
             conn = getConnection();
             // 4:创建陈述对象
@@ -81,9 +86,7 @@ public class JDBCTools {
     }
 
     private static List<HashMap<String, Object>> excuteQuery(String sql) {
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet resultSet = null;
+
         try {
             // 保存所有记录的list集合
             List<HashMap<String, Object>> allResultSet = new ArrayList<HashMap<String, Object>>();
@@ -154,7 +157,7 @@ public class JDBCTools {
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 //         excute("insert into member(reg_name,pwd,mobile_phone) values('zss','123456','13812344321');");
         // excute("update member set leave_amount=50000000.00 where id=6;");
         // excute("delete from member where id=6;");
