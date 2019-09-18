@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -64,7 +65,7 @@ public class JDBCTools {
     }
 
     // 增删改
-    private static void excute(String sql) {
+    public static void excute(String sql) {
         Connection conn = null;
         Statement stmt = null;
         try {
@@ -80,13 +81,13 @@ public class JDBCTools {
         }
     }
 
-    private static List<HashMap<String, Object>> excuteQuery(String sql) {
+    public static List<LinkedHashMap<String, Object>> excuteQuery(String sql) {
         Connection conn = null;
         Statement stmt = null;
         ResultSet resultSet = null;
         try {
             // 保存所有记录的list集合
-            List<HashMap<String, Object>> allResultSet = new ArrayList<HashMap<String, Object>>();
+            List<LinkedHashMap<String, Object>> allResultSet = new ArrayList<LinkedHashMap<String, Object>>();
             // 2:建立连接
             conn = getConnection();
             // 4:创建陈述对象
@@ -100,7 +101,7 @@ public class JDBCTools {
             // 1：结果可能没有，1条或者多条，每条有1个字段和多个字段
             while (resultSet.next()) {
                 // 数据库查询出来的每一条记录都是一个map
-                HashMap<String, Object> resultMap = new HashMap<String, Object>();
+                LinkedHashMap<String, Object> resultMap = new LinkedHashMap<String, Object>();
                 // 这一行有很多列表，现在要把列名作为key，对应记录的的列值作为map的值
                 // 动态获得记录的列数
                 // 循环所有列
@@ -155,13 +156,14 @@ public class JDBCTools {
     }
 
     public static void main(String[] args) throws Exception {
-//         excute("insert into member(reg_name,pwd,mobile_phone) values('zss','123456','13812344321');");
+        // excute("insert into member(reg_name,pwd,mobile_phone)
+        // values('zss','123456','13812344321');");
         // excute("update member set leave_amount=50000000.00 where id=6;");
         // excute("delete from member where id=6;");
         // excuteQuery("select id,reg_name,mobile_phone,pwd from member where
         // reg_name='zss';");
 
-        List<HashMap<String, Object>> allResultSet = excuteQuery("select * from member where reg_name='zss';");
+        List<LinkedHashMap<String, Object>> allResultSet = excuteQuery("select * from member where reg_name='zss';");
         for (HashMap<String, Object> hashMap : allResultSet) {
             System.out.println(hashMap);
         }

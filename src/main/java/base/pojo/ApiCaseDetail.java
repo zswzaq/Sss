@@ -1,11 +1,13 @@
 package base.pojo;
 
+import java.util.List;
+
 /**
  * 接口测试用例的详细信息
  * 
  * @author Administrator
  */
-public class ApiCaseDetail extends Excel{
+public class ApiCaseDetail extends Excel {
     private String caseId;
     private String apiId;
     private String requestData;
@@ -15,8 +17,28 @@ public class ApiCaseDetail extends Excel{
     private String expectedResultInfo;
     // 写回excel的实际数据
     private String actualRespData;
-    
-    
+    // 要验证的sqlCheck列表
+    // 前置验证列表
+    private List<SqlChecker> beforeCheckList;
+    // 后置验证列表
+    private List<SqlChecker> afterCheckList;
+
+    public List<SqlChecker> getBeforeCheckList() {
+        return beforeCheckList;
+    }
+
+    public void setBeforeCheckList(List<SqlChecker> beforeCheckList) {
+        this.beforeCheckList = beforeCheckList;
+    }
+
+    public List<SqlChecker> getAfterCheckList() {
+        return afterCheckList;
+    }
+
+    public void setAfterCheckList(List<SqlChecker> afterCheckList) {
+        this.afterCheckList = afterCheckList;
+    }
+
     public String getCaseId() {
         return caseId;
     }
@@ -69,9 +91,8 @@ public class ApiCaseDetail extends Excel{
     public String toString() {
         return "ApiCaseDetail [caseId=" + caseId + ", apiId=" + apiId + ", requestData=" + requestData + ", apiInfo="
                 + apiInfo + ", expectedResultInfo=" + expectedResultInfo + ", actualRespData=" + actualRespData
-                + ", getRowNo()=" + getRowNo() + "]";
+                + ", beforeCheckList=" + beforeCheckList + ", afterCheckList=" + afterCheckList + ", getRowNo()="
+                + getRowNo() + "]";
     }
-
-    
 
 }

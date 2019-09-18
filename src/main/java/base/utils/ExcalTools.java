@@ -23,9 +23,9 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 public class ExcalTools {
     /**
      * 读取Excel文件数据
-     * @param url 读取文件路径
-     * @param sheetNum 表单索引
-     * @param clazz 创建一个对象，等待使用反射
+     * @param url  读取文件路径
+     * @param sheetNum  表单索引
+     * @param clazz  创建一个对象，等待使用反射
      * @return
      */
     public static ArrayList<Object> readExcal(String url, int sheetNum, Class clazz) {
@@ -138,6 +138,7 @@ public class ExcalTools {
             }
         }
     }
+
     /**
      * 批量回写数据池中的数据到文件中
      * @param writePath 写入数据的路径
@@ -175,23 +176,36 @@ public class ExcalTools {
             }
         }
     }
-    public static void main(String[] args) throws Exception {
-        /*
-         * InputStream inputStream =
-         * ExcalTools.class.getResourceAsStream("/case/test_case_5.xlsx");
-         * Workbook workbook = WorkbookFactory.create(inputStream); //
-         * 获取指定的表单：传名称，索引等都可以 Sheet sheetAt = workbook.getSheetAt(0); Row row =
-         * sheetAt.getRow(1); Cell cellCurrent = row.getCell(0,
-         * MissingCellPolicy.CREATE_NULL_AS_BLANK);
-         * cellCurrent.setCellType(CellType.STRING);
-         * cellCurrent.setCellValue("你好你好 你Ihi奥nihao 你好"); OutputStream
-         * outputStream = new FileOutputStream(new File("D:\\myGit\\a.xlsx"));
-         * workbook.write(outputStream); outputStream.close(); workbook.close();
-         * inputStream.close();
-         */
-        ArrayList<Object> readExcal = readExcal("/case/test_case_all.xlsx", 0, ApiCaseDetail.class);
-        for (Object object : readExcal) {
-            System.out.println(object);
+
+    public static void writeBackBatch2(String sourcePath, String writePath, int sheetIndex) {
+        InputStream inputStream = null;
+        Workbook workbook = null;
+        OutputStream outputStream = null;
+        try {
+            inputStream = ExcalTools.class.getResourceAsStream(sourcePath);
+            workbook = WorkbookFactory.create(inputStream);
+            // 获取指定的表单：传名称，索引等都可以
+            Sheet sheetAt = workbook.getSheetAt(sheetIndex);
+            List<WriteDate> writeDatesList = ApiTools.getSqlDatesList();
+            for (WriteDate writeDate : writeDatesList) {
+                // 获取指定的行索引：行号-1,
+                Row row = sheetAt.getRow(writeDate.getRowNo() - 1);
+                // 获取指定的列索引：列号-1
+                Cell cellCurrent = row.getCell(writeDate.getColumnNo() - 1, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                cellCurrent.setCellType(CellType.STRING);
+                cellCurrent.setCellValue(writeDate.getData());
+            }
+            outputStream = new FileOutputStream(new File(writePath));
+            workbook.write(outputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                outputStream.close();
+                workbook.close();
+                inputStream.close();
+            } catch (Exception e2) {
+            }
         }
     }
 }
