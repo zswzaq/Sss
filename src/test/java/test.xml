@@ -4,8 +4,8 @@
 <suite name="Suite" parallel="false">
 	<test name="Test">
 		<classes>
-			<class name="com.zs.day11.pack2.Failure_Test" />
-			<class name="com.zs.day11.pack2.Success_Test" />
+			<class name="com.zs.day.day11.pack2.Failure_Test" />
+			<class name="com.zs.day.day11.pack2.Success_Test" />
 		</classes>
 	</test>
 </suite>

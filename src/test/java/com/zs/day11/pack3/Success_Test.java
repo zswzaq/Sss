@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import com.zs.day11.pack1.Investor;
 import com.zs.day11.pack1.Member;
 
+
 public class Success_Test extends BaseTest {
     Member zs = null;
     @BeforeClass
