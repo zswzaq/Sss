@@ -147,7 +147,7 @@ public class ExcalTools {
         try {
             inputStream = ExcalTools.class.getResourceAsStream(sourcePath);
             workbook = WorkbookFactory.create(inputStream);
-            // 获取指定的表单：传名称，索引等都可以
+            // 获取指定写入的表单索引:传名称，索引等都可以
             Sheet sheetAt = workbook.getSheetAt(sheetIndex);
             List<WriteDate> writeDatesList = ApiTools.getWriteDatesList();
             for (WriteDate writeDate : writeDatesList) {
