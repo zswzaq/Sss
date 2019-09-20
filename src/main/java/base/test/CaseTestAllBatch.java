@@ -21,7 +21,7 @@ public class CaseTestAllBatch {
     @Test(dataProvider = "getData")
     public void f1(ApiCaseDetail apiCaseDetail) {
         // 1.数据库的前置验证
-        //List<SqlChecker> checkList = apiCaseDetail.getCheckList();// 不好
+        // List<SqlChecker> checkList = apiCaseDetail.getCheckList();// 不好
         SqlCheckTools.beforeCheck(apiCaseDetail);
         String actualResult = HttpTools.excute(apiCaseDetail);
         // 搜集要写入 的数据,将数据写回Excel：行号、列号、内容
@@ -39,7 +39,7 @@ public class CaseTestAllBatch {
     // 执行完所有的测试用例后，在全部写一次
     @AfterSuite
     public void afterSuite() {
-        ExcalTools.writeBackBatch("/case/test_case_all.xlsx", "D:\\a.xlsx", 0);
-        ExcalTools.writeBackBatch2("/case/test_case_all.xlsx", "D:\\a.xlsx", 2);
+        ExcalTools.writeBackBatch("/case/test_case_all.xlsx", "D:\\a.xlsx", 0, 2);
+//        ExcalTools.writeBackBatch2("/case/test_case_all.xlsx", "D:\\a.xlsx", 2);
     }
 }

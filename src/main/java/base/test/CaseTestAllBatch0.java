@@ -1,4 +1,4 @@
-package base.utils;
+package base.test;
 
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.DataProvider;
@@ -6,8 +6,11 @@ import org.testng.annotations.Test;
 
 import base.pojo.ApiCaseDetail;
 import base.pojo.WriteDate;
+import base.utils.ApiTools;
+import base.utils.AssertTools;
+import base.utils.HttpTools;
 
-public class CaseTestAllBatch {
+public class CaseTestAllBatch0 {
     @DataProvider
     public Object[][] getData() {
         return ApiTools.getData();
@@ -31,6 +34,6 @@ public class CaseTestAllBatch {
     // 执行完所有的测试用例后，在全部写一次
     @AfterSuite
     public void afterSuite() {
-        ExcalTools.writeBackBatch("/case/test_case_all.xlsx", "D:\\a.xlsx", 0);
+        //ExcalTools.writeBackBatch("/case/test_case_all.xlsx", "D:\\a.xlsx", 0);
     }
 }
