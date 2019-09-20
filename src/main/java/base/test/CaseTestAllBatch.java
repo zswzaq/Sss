@@ -17,6 +17,7 @@ public class CaseTestAllBatch {
     public Object[][] getData() {
         return ApiTools.getData();
     }
+    //dsdk
 
     @Test(dataProvider = "getData")
     public void f1(ApiCaseDetail apiCaseDetail) {
