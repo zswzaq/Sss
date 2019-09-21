@@ -10,7 +10,6 @@ import com.jayway.jsonpath.JsonPath;
 
 import base.pojo.ApiCaseDetail;
 import base.pojo.ExpectedResultInfo;
-import day16_0905.section01.ExpectedRespKeyInfo;
 
 /**
  * 断言工具类

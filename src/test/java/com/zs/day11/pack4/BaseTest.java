@@ -10,6 +10,7 @@ import org.testng.annotations.BeforeTest;
 import com.zs.day11.pack1.Investor;
 import com.zs.day11.pack1.Member;
 
+
 public class BaseTest {
     static Member zs = null;
 

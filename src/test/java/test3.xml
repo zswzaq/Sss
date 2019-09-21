@@ -4,12 +4,12 @@
 <suite name="Suite" parallel="false">
 	<test name="Test_F">
         <classes>
-            <class name="com.zs.day11.pack3.Failure_Test" />
+            <class name="com.zs.day.day11.pack3.Failure_Test" />
         </classes>
     </test>
     <test name="Test_S">
         <classes>
-            <class name="com.zs.day11.pack3.Success_Test" />
+            <class name="com.zs.day.day11.pack3.Success_Test" />
         </classes>
     </test>
 </suite>

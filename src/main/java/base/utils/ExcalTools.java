@@ -143,9 +143,10 @@ public class ExcalTools {
      * 批量回写数据池中的数据到文件中
      * @param writePath 写入数据的路径
      * @param sheetIndex sheet表单（从0开始）
+     * @param sheetIndexSql sheet表单（从0开始）sql数据验证写入的表单
      * @param writeDate 写入数据
      */
-    public static void writeBackBatch(String sourcePath, String writePath, int sheetIndex) {
+    public static void writeBackBatch(String sourcePath, String writePath, int sheetIndex, int sheetIndexSql) {
         InputStream inputStream = null;
         Workbook workbook = null;
         OutputStream outputStream = null;
@@ -158,6 +159,17 @@ public class ExcalTools {
             for (WriteDate writeDate : writeDatesList) {
                 // 获取指定的行索引：行号-1,
                 Row row = sheetAt.getRow(writeDate.getRowNo() - 1);
+                // 获取指定的列索引：列号-1
+                Cell cellCurrent = row.getCell(writeDate.getColumnNo() - 1, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                cellCurrent.setCellType(CellType.STRING);
+                cellCurrent.setCellValue(writeDate.getData());
+            }
+            // 获取指定的表单：传名称，索引等都可以
+            Sheet sheetAtSqlSheet = workbook.getSheetAt(sheetIndexSql);
+            List<WriteDate> writeDatesListSqList = ApiTools.getSqlDatesList();
+            for (WriteDate writeDate : writeDatesListSqList) {
+                // 获取指定的行索引：行号-1,
+                Row row = sheetAtSqlSheet.getRow(writeDate.getRowNo() - 1);
                 // 获取指定的列索引：列号-1
                 Cell cellCurrent = row.getCell(writeDate.getColumnNo() - 1, MissingCellPolicy.CREATE_NULL_AS_BLANK);
                 cellCurrent.setCellType(CellType.STRING);
@@ -176,7 +188,12 @@ public class ExcalTools {
             }
         }
     }
-
+    /**
+     * sql数据库验证写入数据
+     * @param writePath 写入数据的路径
+     * @param sheetIndex sheet表单（从0开始）
+     * @param writeDate 写入数据
+     */
     public static void writeBackBatch2(String sourcePath, String writePath, int sheetIndex) {
         InputStream inputStream = null;
         Workbook workbook = null;
