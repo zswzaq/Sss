@@ -10,11 +10,12 @@ import java.util.List;
 public class ApiCaseDetail extends Excel {
     private String caseId;
     private String apiId;
-    private String requestData;
+    private String requestData;// 请求体
     // 每条测试用例都对应有一个接口基本信息：接口基本信息是测试用例对象的一个属性
     private ApiInfo apiInfo;
     // 断言预期结果
     private String expectedResultInfo;
+    private String extractRespData;
     // 写回excel的实际数据
     private String actualRespData;
     // 要验证的sqlCheck列表
@@ -87,12 +88,20 @@ public class ApiCaseDetail extends Excel {
         this.actualRespData = actualRespData;
     }
 
+    public String getExtractRespData() {
+        return extractRespData;
+    }
+
+    public void setExtractRespData(String extractRespData) {
+        this.extractRespData = extractRespData;
+    }
+
     @Override
     public String toString() {
         return "ApiCaseDetail [caseId=" + caseId + ", apiId=" + apiId + ", requestData=" + requestData + ", apiInfo="
-                + apiInfo + ", expectedResultInfo=" + expectedResultInfo + ", actualRespData=" + actualRespData
-                + ", beforeCheckList=" + beforeCheckList + ", afterCheckList=" + afterCheckList + ", getRowNo()="
-                + getRowNo() + "]";
+                + apiInfo + ", expectedResultInfo=" + expectedResultInfo + ", extractRespData=" + extractRespData
+                + ", actualRespData=" + actualRespData + ", beforeCheckList=" + beforeCheckList + ", afterCheckList="
+                + afterCheckList + ", getRowNo()=" + getRowNo() + "]";
     }
 
 }

@@ -29,19 +29,21 @@ public class HttpTools {
 
     /**
      * get请求
-     * 
-     * @param url
-     *            请求地址
-     * @param map
-     *            请求参数 form表单
+     * @param url 请求地址
+     * @param map 请求参数 form表单
      * @return
      * @throws Exception
      */
-
     public static String excute(ApiCaseDetail apiCaseDetail) {
         String type = apiCaseDetail.getApiInfo().getType();
+        // 拿到请求体，
+        String requestData = apiCaseDetail.getRequestData();
+        //替换请求体中的数据：member_Id等数据
+        String replacedRequestData = ParameUtils.getReplacedParameter(requestData);
+        // 重新set回请求体去
+        apiCaseDetail.setRequestData(replacedRequestData);
         String result = null;
-        // 判断
+        // 判断请求类型，请求分发
         if ("GET".equalsIgnoreCase(type)) {
             // url 和数据是api详情里有的，所以直接可以传一个apiCase详情对象
             result = HttpTools.doGet(apiCaseDetail);
@@ -87,11 +89,8 @@ public class HttpTools {
 
     /**
      * post请求
-     * 
-     * @param url
-     *            请求地址
-     * @param map
-     *            请求参数对 ：form表单格式
+     * @param url 请求地址
+     * @param map 请求参数对 ：form表单格式
      * @return
      * @throws Exception
      */
@@ -126,11 +125,8 @@ public class HttpTools {
 
     /**
      * doPost方法
-     * 
-     * @param url
-     *            请求url
-     * @param requestData
-     *            json请求体
+     * @param url  请求url
+     * @param requestData json请求体
      * @return
      */
     public static String doPost(String url, String requestData) {
@@ -160,9 +156,7 @@ public class HttpTools {
 
     /**
      * doPost方法
-     * 
-     * @param apiCaseDetail
-     *            参数：用例详情对象
+     * @param apiCaseDetail 参数：用例详情对象
      * @return
      */
     public static String doPost(ApiCaseDetail apiCaseDetail) {
@@ -198,11 +192,8 @@ public class HttpTools {
 
     /**
      * doGet方法
-     * 
-     * @param url
-     *            请求url
-     * @param requestData
-     *            请求参数json格式
+     * @param url 请求url
+     * @param requestData 请求参数json格式
      * @return
      */
     public static String doGet(String url, String requestData) {
@@ -240,9 +231,7 @@ public class HttpTools {
 
     /**
      * dotGet方法
-     * 
-     * @param apiCaseDetail
-     *            参数：用例详情对象
+     * @param apiCaseDetail  参数：用例详情对象
      * @return
      */
     public static String doGet(ApiCaseDetail apiCaseDetail) {
@@ -317,7 +306,6 @@ public class HttpTools {
     }
 
     private static String doDelete(ApiCaseDetail apiCaseDetail) {
-
         try {
             HttpDelete delete = new HttpDelete(apiCaseDetail.getApiInfo().getUrl());
             // 拿到所有的headers

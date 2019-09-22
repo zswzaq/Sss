@@ -6,8 +6,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
+import com.jayway.jsonpath.Configuration;
+import com.jayway.jsonpath.JsonPath;
+
 import base.pojo.ApiCaseDetail;
 import base.pojo.ApiInfo;
+import base.pojo.ExtractRespData;
 import base.pojo.SqlChecker;
 import base.pojo.WriteDate;
 
@@ -94,6 +99,34 @@ public class ApiTools {
             datas[i] = arr;
         }
         return datas;
+    }
+
+    /**
+     * 提取数据到全局变量数据池中
+     * @param actualResult 实际结果
+     * @param apiCaseDetail 测试用例对象（有测试用例所有的细节）
+     */
+    public static void extractSetGlobalData(String actualResult, ApiCaseDetail apiCaseDetail) {
+        // 从Excel中提取数据的字符串
+        String extractRespDataStr = apiCaseDetail.getExtractRespData();
+        // 得到字符串的列表
+        List<ExtractRespData> extractRespDataList = JSONObject.parseArray(extractRespDataStr, ExtractRespData.class);
+        if (extractRespDataList == null) {
+            return;
+        } else {
+            // 把实际响应结果解析成jsonpath对象
+            Object parse = Configuration.defaultConfiguration().jsonProvider().parse(actualResult);
+            for (ExtractRespData extractRespData : extractRespDataList) {
+                // 提取对应数据的jsonpath
+                String getData = extractRespData.getGetData();
+                // 要放入数据池中的参数
+                String parameName = extractRespData.getToGloableParame();
+                // jsonpath 解析实际响应结果数据,提取
+                Object parameValue = JsonPath.read(parse, getData);
+                // 放入全局变量池中
+                ParameUtils.addGlobalData(parameName, parameValue);
+            }
+        }
     }
 
 }

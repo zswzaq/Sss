@@ -1,5 +1,8 @@
 package base.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -8,6 +11,7 @@ import base.pojo.ApiCaseDetail;
 import base.pojo.WriteDate;
 import base.utils.ApiTools;
 import base.utils.AssertTools;
+import base.utils.ExcalTools;
 import base.utils.HttpTools;
 
 public class CaseTestAllBatch0 {
@@ -21,7 +25,7 @@ public class CaseTestAllBatch0 {
         String actualResult = HttpTools.excute(apiCaseDetail);
         // 搜集要写入 的数据
         // 添加一条要写的数据
-        ApiTools.setWriteDatesList(new WriteDate(apiCaseDetail.getRowNo(), 5, actualResult));
+        ApiTools.setWriteDatesList(new WriteDate(apiCaseDetail.getRowNo(), 6, actualResult));
         // 将数据写回Excel：行号、列号、内容
         //WriteDate writeDate = new WriteDate(apiCaseDetail.getRowNo(), 4, actualResult);
         // Excel原路径，文件写入目标路径，写入的数据（表单索引、行索引、列索引、内容）
@@ -34,6 +38,9 @@ public class CaseTestAllBatch0 {
     // 执行完所有的测试用例后，在全部写一次
     @AfterSuite
     public void afterSuite() {
-        //ExcalTools.writeBackBatch("/case/test_case_all.xlsx", "D:\\a.xlsx", 0);
+        List<Integer> sheetList = new ArrayList<Integer>();
+        sheetList.add(0);
+        sheetList.add(2);
+        ExcalTools.writeBackBatch2("/case/test_case_all.xlsx", "D:\\a.xlsx", sheetList);
     }
 }
