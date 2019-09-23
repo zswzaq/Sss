@@ -21,6 +21,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.lemon.EncryptUtils;
 
 import base.pojo.ApiCaseDetail;
 import base.pojo.Headers;
@@ -35,15 +36,11 @@ public class HttpTools {
      * @throws Exception
      */
     public static String excute(ApiCaseDetail apiCaseDetail) {
-        String type = apiCaseDetail.getApiInfo().getType();
-        // 拿到请求体，
-        String requestData = apiCaseDetail.getRequestData();
-        //替换请求体中的数据：member_Id等数据
-        String replacedRequestData = ParameUtils.getReplacedParameter(requestData);
-        // 重新set回请求体去
-        apiCaseDetail.setRequestData(replacedRequestData);
-        String result = null;
+        // 处理请求体数据：普通参数的替换、鉴权的参数的添加
+        handle_RequestData(apiCaseDetail);
         // 判断请求类型，请求分发
+        String type = apiCaseDetail.getApiInfo().getType();
+        String result = null;
         if ("GET".equalsIgnoreCase(type)) {
             // url 和数据是api详情里有的，所以直接可以传一个apiCase详情对象
             result = HttpTools.doGet(apiCaseDetail);
@@ -55,6 +52,34 @@ public class HttpTools {
             result = HttpTools.doDelete(apiCaseDetail);
         }
         return result;
+    }
+    
+    private static void handle_RequestData(ApiCaseDetail apiCaseDetail) {
+        // 拿到原请求体，
+        String requestData = apiCaseDetail.getRequestData();
+        // 替换请求体中的数据：member_Id等数据
+        String replacedRequestData = ParameUtils.getReplacedParameter(requestData);
+        // 拿到authCheck，是否需要鉴权
+        String auth = apiCaseDetail.getApiInfo().getAuthCheck();
+        if (auth != null && "T".equalsIgnoreCase(auth)) {
+            // 获取token： 从数据池中获取
+            String token = ParameUtils.getGlobalData("token").toString();
+            // 获取时间戳
+            Long timestamp = System.currentTimeMillis() / 1000;
+            // 时间戳+token=sign --》put入请求体中
+            String tempStr = token.substring(0, 50) + timestamp;
+            String sign = EncryptUtils.rsaEncrypt(tempStr);
+            // 将请求体转成map，设置入新加的两个请求头信息
+            Map<String, Object> reqMap = (Map<String, Object>) JSONObject.parse(replacedRequestData);
+            // 将新加的请求体put进去
+            reqMap.put("timestamp", timestamp);
+            // reqMap.put("sign", sign);
+            System.out.println(reqMap.toString());
+            // 再将map转成string类型的,即为最终的请求体
+            replacedRequestData = JSONObject.toJSONString(reqMap);
+        }
+        // 重新set回请求体去
+        apiCaseDetail.setRequestData(replacedRequestData);
     }
 
     public static String doGet(String url, Map<String, String> map) {
@@ -168,7 +193,9 @@ public class HttpTools {
             // 设值请求头的必填项
             // post.setHeader("X-Lemonban-Media-Type", "lemonban.v1");
             for (Headers header : headers) {
-                post.setHeader(header.getName(), header.getValue());
+                // 从数据池拿出来的请求头token，替换请求头中的${token},
+                String replacedHeader = ParameUtils.getReplacedParameter(header.getValue());
+                post.setHeader(header.getName(), replacedHeader);
             }
             // 创建一个json格式的请求体
             StringEntity entity = new StringEntity(apiCaseDetail.getRequestData(), ContentType.APPLICATION_JSON);
@@ -214,7 +241,7 @@ public class HttpTools {
             String params = URLEncodedUtils.format(parameters, "utf-8");
             // 创建一个http 的get请求
             HttpGet get = new HttpGet(url + "?" + params);
-            get.setHeader("X-Lemonban-Media-Type", "lemonban.v1");
+            //get.setHeader("X-Lemonban-Media-Type", "lemonban.v1");
             // 创建一个发包客户端
             CloseableHttpClient createDefault = HttpClients.createDefault();
             // 发包,得到http响应

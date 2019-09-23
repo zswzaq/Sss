@@ -5,13 +5,15 @@ package base.pojo;
  * 
  * @author Administrator
  */
-public class ApiInfo extends Excel{
+public class ApiInfo extends Excel {
     private String apiId;
     private String apiName;
     private String url;
     private String type;
     // headers
     private String headers;
+    // 判断是否需要鉴权
+    private String authCheck;
 
     public String getApiId() {
         return apiId;
@@ -53,10 +55,18 @@ public class ApiInfo extends Excel{
         this.headers = headers;
     }
 
+    public String getAuthCheck() {
+        return authCheck;
+    }
+
+    public void setAuthCheck(String authCheck) {
+        this.authCheck = authCheck;
+    }
+
     @Override
     public String toString() {
         return "ApiInfo [apiId=" + apiId + ", apiName=" + apiName + ", url=" + url + ", type=" + type + ", headers="
-                + headers + ", getRowNo()=" + getRowNo() + "]";
+                + headers + ", authCheck=" + authCheck + ", getRowNo()=" + getRowNo() + "]";
     }
 
 }
